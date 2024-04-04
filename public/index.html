@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+  
+<body>
+  <div class="form-container">
+    <!-- <form action=" http://localhost:3000/pay" method="post"> -->
+      <form action=" https://sandbox.payfast.co.za​/eng/process" method="post">
+      
+      <input type="hidden" name="merchant_id" value="10033177">
+      <input type="hidden" name="merchant_key" value="p67vrkpp4x7ba">
+      
+      <input type="text" name="amount" placeholder="Amount to Pay">
+      <input type="text" name="item_name" placeholder="item_name">
+      <input type="submit" value="Pay Now">
+    </form>
+  </div>
+ <!-- <input type="hidden" name="return_url" value="http://www.yourwebsite.com/return"> -->
+      <!-- <input type="hidden" name="cancel_url" value="http://www.yourwebsite.com/cancel"> -->
+      <!-- <input type="hidden" name="notify_url" value="http://www.yourwebsite.com/notify"> -->
+      <!-- <input type="hidden" name="signature" value="f103e22c0418655fb03991538c51bfd5"> -->
+      <!-- <input type="text" name="name_first" placeholder="First Name"> -->
+      <!-- <input type="text" name="name_last" placeholder="Last Name"> -->
+      <!-- <input type="email" name="email_address" placeholder="Email Address">       -->
+      <!-- <input type="text" name="m_payment_id" placeholder="Unique Payment ID"> -->
+</body>
+</html>
