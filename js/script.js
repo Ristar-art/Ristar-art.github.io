@@ -16,67 +16,7 @@ document.querySelector("#cart-btn").onclick = () => {
   navbar.classList.remove("active");
   searchForm.classList.remove("active");
 };
-// Define myData with your actual data
-// const myData = {
-//   merchant_id: "10033177",
-//   merchant_key: "p67vrkpp4x7ba",
-//   return_url: "https://www.example.com/success",
-//   cancel_url: "https://www.example.com/cancel",
-//   notify_url: "https://www.example.com/notify",
-//   name_first: "First Name",
-//   name_last: "Last Name",
-//   email_address: "test@test.com",
-//   m_payment_id: "01AB",
-//   amount: "100.00",
-//   item_name: "boby",
-//   passphrase: "f103e22c0418655fb03991538c51bfd5",
-//   // Add other necessary data here
-// };
-// Function to generate the payment form
-// const createPaymentForm = () => {
-//   const form = document.createElement("form");
-//   form.action = "https://sandbox.payfast.co.za/eng/process";
-//   form.method = "post";
-//   for (const key in myData) {
-//     if (myData.hasOwnProperty(key)) {
-//       const input = document.createElement("input");
-//       input.type = "hidden";
-//       input.name = key;
-//       input.value = myData[key];
-//       form.appendChild(input);
-//     }
-//   }
-//   document.getElementById("paymentFormContainer").appendChild(form);
-//   return form;
-// };
-// Function to generate the signature
-// const generateSignature = async () => {
-//   try {
-//     const response = await fetch("http://localhost:3000/hashData", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(myData),
-//     });
-//     if (!response.ok) {
-//       throw new Error("Failed to generate signature");
-//     }
-//     const data = await response.json();
-//     myData["signature"] = data.signature;
-//     console.log("Signature generated:", data.signature);
-//   } catch (error) {
-//     console.error("Error generating signature:", error.message);
-//   }
-// };
-// // Call the function to generate the signature and create payment form
-// const initializePayment = async () => {
-//   await generateSignature();
-//   createPaymentForm();
-// };
-// initializePayment();
-// Change functionality of Checkout button to submit the form
-// Define myData outside the event listener
+
 const myData = {
     merchant_id: "10033177",
     merchant_key: "p67vrkpp4x7ba",
@@ -89,7 +29,7 @@ const myData = {
     m_payment_id: "01AB",
     amount: "100.00",
     item_name: "boby",
-    passphrase: "f103e22c0418655fb03991538c51bfd5",
+    // passphrase: "f103e22c0418655fb03991538c51bfd5",
     // Add other necessary data here
    };
    
@@ -107,8 +47,9 @@ const myData = {
          throw new Error("Failed to generate signature");
        }
        const data = await response.json();
+       console.log("data.signature is ",data.signature)
        myData["signature"] = data.signature;
-       console.log("Signature generated:", data.signature);
+     
     } catch (error) {
        console.error("Error generating signature:", error.message);
     }
@@ -142,7 +83,9 @@ const myData = {
   };
   const submitPaymentForm = () => {
     // Find the form element
+
     const form = document.querySelector("form[action='https://sandbox.payfast.co.za/eng/process']");
+    console.log('form is ', form)
     if (form) {
         // Submit the form
         form.submit();
@@ -154,7 +97,7 @@ const myData = {
    const checkoutButton = document.querySelector(".btn-checkout");
    checkoutButton.textContent = "Checkout";
    checkoutButton.addEventListener("click", async function (event) {
-    console.log("hey i have been pressed");
+   
     // You can modify myData here if needed before generating the signature
     await generateSignature();
   // Call the createPaymentForm function to create the form
@@ -180,14 +123,134 @@ function clearCartItems() {
     item.remove();
   });
 }
-// Function to add to cart
+
+// Define the array of boxes
+const boxes = [
+    {
+        imgSrc: "../images/product.jpg",
+        title: "Stylish cap",
+
+        price: 200,
+        // discountPrice: 170,
+    },
+    {
+        imgSrc: "../images/product.jpg",
+        title: "Stylish cap",
+        price: 220,
+    },
+    {
+        imgSrc: "../images/product.jpg",
+        title: "Stylish cap",
+        price: 120,
+    },
+    {
+        imgSrc: "../images/product.jpg",
+        title: "Stylish cap",
+        price: 100,
+    },
+    {
+        imgSrc: "../images/product.jpg",
+        title: "Stylish cap",
+        price: 250,
+    },
+    {
+        imgSrc: "../images/product.jpg",
+        title: "Stylish cap",
+        price: 150,
+    },
+    {
+        imgSrc: "../images/product.jpg",
+        title: "Stylish cap",
+        price: 300,
+    },
+    {
+        imgSrc: "../images/product.jpg",
+        title: "Stylish cap",
+        price: 400,
+    },
+    // Add more boxes as needed
+];
+
+// Function to create a box element
+const createBox = (box) => {
+    const boxElement = document.createElement('div');
+    boxElement.className = 'box';
+
+    const img = document.createElement('img');
+    img.src = box.imgSrc;
+    boxElement.appendChild(img);
+
+    const h3 = document.createElement('h3');
+    h3.textContent = box.title;
+    boxElement.appendChild(h3);
+
+    const price = document.createElement('div');
+    price.className = 'price';
+    price.textContent =  box.price;
+    if (box.discountPrice) {
+        const discountPrice = document.createElement('span');
+        discountPrice.textContent = box.discountPrice;
+        price.appendChild(discountPrice);
+    }
+    boxElement.appendChild(price);
+
+    const btnCart = document.createElement('a');
+    btnCart.href = '#';
+    btnCart.className = 'btn-cart';
+    btnCart.textContent = 'add to cart';
+    boxElement.appendChild(btnCart);
+
+    return boxElement;
+};
+
+// Get the box container
+const boxContainer = document.querySelector('.box-container');
+
+// Populate the box container with the boxes
+boxes.forEach(box => {
+    const boxElement = createBox(box);
+    boxContainer.appendChild(boxElement);
+});
+
+function removeFromCart(event) {
+    // Remove the item from the cartItems array
+    let indexToRemove = event.target.parentElement.querySelector("h3").textContent;
+    cartItems = cartItems.filter(item => item.productName !== indexToRemove);
+    // Remove the cart item element from the DOM
+    event.target.parentElement.remove();
+    // Update cart count
+    updateCartCount();
+    // Update cart total
+    updateCartTotal();
+  }
+
+  // Define an array to keep track of items in the cart
+  let cartItems = [];
+  
+  // Function to update cart count
+function updateCartCount() {
+    let cartItemsCount = document.querySelectorAll(".cart-items-container .cart-item").length;
+  
+    // Update cart count display
+    let cartCountElement = document.querySelector("#cart-count");
+    if (cartCountElement) {
+      cartCountElement.innerText = cartItemsCount;
+    } else {
+      console.log('Element with id "cart-count" not found');
+    }
+  }
+  // Function to add to cart
+ 
 function addToCart(imageSrc, productName, price) {
+  // Push the item to the cartItems array
+  cartItems.push({ productName: productName, price: price });
+
   // Create new cart item element
   let cartItemElement = document.createElement("div");
   cartItemElement.classList.add("cart-item");
   // Set inner HTML of the cart item
   cartItemElement.innerHTML = `
-        <span class="fas fa-times"></span>
+        <span class="fas fa-times" onclick="removeFromCart(event)"></span>
         <img src="${imageSrc}" alt="${productName}">
         <div class="content">
             <h3>${productName}</h3>
@@ -200,45 +263,47 @@ function addToCart(imageSrc, productName, price) {
   updateCartCount();
   // Calculate total and display in the cart
   updateCartTotal(); // Call the function to update the total
+  myData.amount = totalAmount.toFixed(2);
+  console.log("totalAmount.toFixed(2) is ",totalAmount.toFixed(2))
 }
-// Function to update cart count
-function updateCartCount() {
-  let cartItemsCount = document.querySelectorAll(
-    ".cart-items-container .cart-item"
-  ).length;
-  // Update cart count display
-  document.querySelector("#cart-count").innerText = cartItemsCount;
-}
+
+  
+let totalAmount = 0; // Define a variable to hold the total amount
+
 // Function to update cart total
 function updateCartTotal() {
-  let cartItems = document.querySelectorAll(
-    ".cart-items-container .cart-item:not(:last-child)"
-  );
   let total = 0;
-  // Loop through each cart item
   cartItems.forEach((item) => {
-    let priceString = item.querySelector(".price").textContent;
-    // Extract numerical value from the price string using regex
-    let matches = priceString.match(/[\d.]+/);
-    if (matches && matches.length > 0) {
-      let price = parseFloat(matches[0]);
-      total += price;
+    const itemPrice = Number(item.price);
+    if (isNaN(itemPrice)) {
+      console.error(`Item price is not a valid number: ${item.price}`);
+      return;
     }
+    total += itemPrice;
   });
-  // Calculate the total amount to be paid based on the number of products in the cart
-  let cartItemCount = cartItems.length;
-  let discount = 0; // Assuming no discount initially
-  if (cartItemCount >= 2) {
-    // Apply a discount if there are 2 or more products in the cart
-    discount = total * 0.1; // 10% discount
+
+  // Ensure total is initialized as a number
+  if (typeof total !== 'number' || isNaN(total)) {
+    console.error('Total is not a valid number:', total);
+    return;
   }
-  // Calculate the total amount to be paid after applying the discount
-  let totalAmountToBePaid = total - discount;
-  // Display the total amount to be paid in the cart with 'R' symbol for Rands
-  document.querySelector(
-    "#cart-total"
-  ).innerText = `Total: R${totalAmountToBePaid.toFixed(2)}`;
+
+  // Update cart total display
+  let cartTotalElement = document.querySelector("#cart-total");
+  if (cartTotalElement) {
+    cartTotalElement.innerText = 'R' + total.toFixed(2); // Display total with two decimal places
+    totalAmount = total; // Store the total amount in the variable
+    console.log('totalPrice is ', total.toFixed(2))
+  } else {
+    console.log('Element with id "cart-total" not found');
+  }
 }
+
+
+
+  
+  
+
 // Example usage
 document.querySelectorAll(".btn-cart").forEach((button) => {
   button.addEventListener("click", function () {

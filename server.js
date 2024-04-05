@@ -35,17 +35,18 @@ app.post("/hashData", (req, res) => {
   const data = req.body;
   
   // Assuming passphrase is sent in the request body as well
-  const passPhrase = req.body.passphrase;
+  // const passPhrase = req.body.passphrase;
   
-  const signature = generateSignature(data, passPhrase);
+  const signature = generateSignature(data);
+  //const signature = generateSignature(data, passPhrase);
   
   res.json({ signature: signature });
 });
 
-app.get("/", (req, res) => {
-  const html = fs.readFileSync("index.html", "utf8");
-  res.send(html);
-});
+// app.get("/", (req, res) => {
+//   const html = fs.readFileSync("index.html", "utf8");
+//   res.send(html);
+// });
 
 app.listen(port, () => {
   console.log(`PayFast payment gateway listening at http://localhost:${port}`);
