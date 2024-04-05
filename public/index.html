@@ -1,57 +1,266 @@
-<!-- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PayFast Payment Gateway</title>
-</head>
-<body>
-  <form id="payfast-form" method="post" action="https://sandbox.payfast.co.za/process">
-    <input type="hidden" id="merchant_id" name="merchant_id" value="10033177">
-    <input type="hidden" id="merchant_key" name="merchant_key" value="p67vrkpp4x7ba">
-    <input type="hidden" id="return_url" name="return_url" value="http://localhost:3000/payment/success">
-    <input type="hidden" id="cancel_url" name="cancel_url" value="http://localhost:3000/payment/cancel">
-    <input type="hidden" id="notify_url" name="notify_url" value="http://localhost:3000/payment/notify">
-    <input type="hidden" id="name_first" name="name_first" value="Test">
-    <input type="hidden" id="name_last" name="name_last" value="User">
-    <input type="hidden" id="email_address" name="email_address" value="testuser@example.com">
-    <input type="hidden" id="m_payment_id" name="m_payment_id" value="123456">
-    <input type="hidden" id="amount" name="amount" value="1000">
-    <input type="hidden" id="currency" name="currency" value="ZAR">
-    <input type="hidden" id="item_name" name="item_name" value="Test Item">
-    <input type="submit" value="Pay Now">
-  </form>
-  <script>
-    const form = document.getElementById('payfast-form');
-    const generateSignature = require('./generateSignature');
-    const payload = generateSignature(1000, 'Test Item');
-    for (const key in payload) {
-      if (payload.hasOwnProperty(key)) {
-        form[key].value = payload[key];
-      }
-    }
-  </script>
-</body>
-</html> -->
+  <!--font awesome cdn link-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PayFast Payment Gateway</title>
+  <!--custom css file link -->
+  <link rel="stylesheet" href="../css/style.css">
+
 </head>
 <body>
-  <div class="form-container">
-    <form action="http://localhost:3000/pay" method="post">
-      <input type="text" name="amount" placeholder="Amount to Pay">
-      <input type="text" name="item_name" placeholder="Item Name">
-      <input type="submit" value="Pay Now">
-    </form>
-  </div>
+   <!--header section starts-->
+
+   <header class="header">
+    <a href="#" class="logo">
+        <img src="../images/logo.png" alt="">
+    </a>
+
+    <nav class="navbar">
+        <a href="#home">home</a>
+        <a href="#about">about</a>
+        <a href="#products">products</a>
+        <a href="#review">review</a>
+        <a href="#contact">contact</a>
+    </nav>
+
+    <div class="icons">
+        <div class="fas fa-search" id="search-btn"></div>
+        <div class="fa fa-shopping-cart" id="cart-btn"></div>
+        <div class="fa fa-bars" id="menu-btn"></div>
+    </div>
+
+    <div class="search-form">
+        <input type="search" id="search" placeholder="search...">
+        <label for="search-box" class="fas fa-search"></label>
+    </div>
+
+    <div class="cart-items-container">
+        <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="../images/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 01</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div>
+        <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="i../mages/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 02</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div>
+        <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="../images/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 03</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div>
+        <!-- <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="../images/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 04</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div> -->
+        <div>
+          <script>
+            // Define myData with your actual data
+            const myData = {
+              "merchant_id": "10033177",
+              "merchant_key": "p67vrkpp4x7ba",
+              "return_url": "https://www.example.com/success",
+              "cancel_url": "https://www.example.com/cancel",
+              "notify_url": "https://www.example.com/notify",
+              "name_first": "First Name",
+              "name_last": "Last Name",
+              "email_address": "test@test.com",
+              "m_payment_id": "01AB",
+              "amount": "100.00",
+              "item_name": "boby",
+              "passphrase":"f103e22c0418655fb03991538c51bfd5"
+              // Add other necessary data here
+            };
+            
+            // Function to generate the payment form
+            const createPaymentForm = () => {
+              const form = document.createElement('form');
+              form.action = 'https://sandbox.payfast.co.za/eng/process';
+              form.method = 'post';
+              
+              for (const key in myData) {
+                if (myData.hasOwnProperty(key)) {
+                  const input = document.createElement('input');
+                  input.type = 'hidden';
+                  input.name = key;
+                  input.value = myData[key];
+                  form.appendChild(input);
+                }
+              }
+              
+              const submitButton = document.createElement('input');
+              submitButton.type = 'submit';
+              submitButton.value = 'Pay Now';
+              form.appendChild(submitButton);
+              
+              // Append the form to the container
+              document.getElementById('paymentFormContainer').appendChild(form);
+              
+              // Add event listener to the submit button
+              submitButton.addEventListener('click', function(event) {
+                // Prevent the default form submission behavior
+                event.preventDefault();
+                
+                // Submit the form
+                form.submit();
+              });
+            };
+            
+            // Call the function to generate the payment form
+            createPaymentForm();
+        
+            // Function to generate the signature
+            const generateSignature = () => {
+              // Send a POST request to the server to generate the signature
+              fetch('http://localhost:3000/hashData', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(myData)
+              })
+              .then(response => response.json())
+              .then(data => {
+                // Update myData with the generated signature
+                myData['signature'] = data.signature;
+                console.log('data.signature is ',data.signature)
+              })
+              .catch(error => console.error('Error:', error));
+            };
+        
+            // Call the function to generate the signature
+            generateSignature();
+          </script>
+          <a href="#" class="btn">Checkout</a>
+      </div>
+    </div>
+    
+
+</header>
+
+<!--header section ends-->
+
+
+
+<!--home section starts here-->
+
+<section class="home" id="home">
+
+    <div class="content">
+        <h3> Fresh looking caps </h3>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aut tempora veniam omnis blanditiis rem in
+            architecto! </p>
+        <a href="#" class="btn">Shop Now</a>
+    </div>
+</section>
+
+<!--home section ends here-->
+
+<!--about sectiom starts here-->
+<section class="about" id="about">
+    <h1 class="heading"> <span>about</span> us</h1>
+
+    <div class="row">
+
+        <div class="image">
+            <img src="images/about.jpg" alt="">
+        </div>
+
+        <div class="content">
+            <h3>Why Our Caps?</h3>
+            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint facilis pariatur at ipsa eum iusto
+                nemo voluptates maxime aut earum voluptatum consequuntur est repudiandae a reiciendis,
+                necessitatibus similique libero aliquam.</p>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt harum, libero molestiae vitae
+                itaque, nostrum eligendi officiis soluta tempora, aspernatur modi nemo rem dolorem impedit aliquam
+                nulla. Laboriosam, nemo optio?</p>
+                <a href="#" class="btn">Learn More</a>
+
+        </div>
+    </div>
+</section>
+<!--about sectiom ends here-->
+<section class="products" id="products">
+<h1 class="heading">Choose what <span>you like</span></h1>
+<div class="box-container">
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200<span>R170</span></div>
+        <a href="#" class="btn">add to cart</a>
+    </div>
+
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200<span>R170</span></div>
+        <a href="#" class="btn">add to cart</a>
+    </div>
+
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200<span>R170</span></div>
+        <a href="#" class="btn">add to cart</a>
+    </div>
+
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200<span>R170</span></div>
+        <a href="#" class="btn">add to cart</a>
+    </div>
+
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200<span>R170</span></div>
+        <a href="#" class="btn">add to cart</a>
+    </div>
+
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200<span>R170</span></div>
+        <a href="#" class="btn">add to cart</a>
+    </div>
+
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200<span>R170</span></div>
+        <a href="#" class="btn">add to cart</a>
+    </div>
+
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200<span>R170</span></div>
+        <a href="#" class="btn">add to cart</a>
+    </div>
+</div>
+</section>
+<!-- custom js file link-->
+<script src="../js/script.js"></script>
+
+  
 </body>
 </html>
-
- <!-- <form action=" https://sandbox.payfast.co.za​/eng/process" method="post"> -->
-      
