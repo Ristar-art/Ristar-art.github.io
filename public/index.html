@@ -1,22 +1,168 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PayFast Payment Gateway</title>
+  <!--font awesome cdn link-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!--custom css file link -->
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <div class="form-container">
-    <form action="http://localhost:3000/pay" method="post">
-      <input type="text" name="amount" placeholder="Amount to Pay">
-      <input type="text" name="item_name" placeholder="Item Name">
-      <input type="submit" value="Pay Now">
-    </form>
+   <!--header section starts-->
+   <header class="header">
+    <a href="#" class="logo">
+        <img src="../images/logo.png" alt="">
+    </a>
+    <nav class="navbar">
+        <a href="#home">home</a>
+        <a href="#about">about</a>
+        <a href="#products">products</a>
+        <a href="#review">review</a>
+        <a href="#contact">contact</a>
+    </nav>
+    <div class="icons">
+        <div class="fas fa-search" id="search-btn"></div>
+        <div class="fa fa-shopping-cart" id="cart-btn"></div>
+        <div class="fa fa-bars" id="menu-btn"></div>
+    </div>
+    <div class="search-form">
+        <input type="search" id="search" placeholder="search...">
+        <label for="search-box" class="fas fa-search"></label>
+    </div>
+    <div class="cart-items-container">
+        <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="../images/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 01</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div>
+        <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="i../mages/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 02</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div>
+        <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="../images/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 03</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div>
+        <!-- <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="../images/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 04</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div> -->
+        <div id="cart-total" class="cart-total">Total: R0.00</div> <!-- Add this line -->
+        <div>
+         
+          <div id="paymentFormContainer">
+            <a href="#" class="btn-checkout">Checkout</a>
+          </div>
+
+    
   </div>
+    </div>
+</header>
+<!--header section ends-->
+<!--home section starts here-->
+<section class="home" id="home">
+    <div class="content">
+        <h3> Fresh looking caps </h3>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aut tempora veniam omnis blanditiis rem in
+            architecto! </p>
+        <a href="#" class="btn">Shop Now</a>
+    </div>
+</section>
+<!--home section ends here-->
+<!--about sectiom starts here-->
+<section class="about" id="about">
+    <h1 class="heading"> <span>about</span> us</h1>
+    <div class="row">
+        <div class="image">
+            <img src="images/about.jpg" alt="">
+        </div>
+        <div class="content">
+            <h3>Why Our Caps?</h3>
+            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint facilis pariatur at ipsa eum iusto
+                nemo voluptates maxime aut earum voluptatum consequuntur est repudiandae a reiciendis,
+                necessitatibus similique libero aliquam.</p>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt harum, libero molestiae vitae
+                itaque, nostrum eligendi officiis soluta tempora, aspernatur modi nemo rem dolorem impedit aliquam
+                nulla. Laboriosam, nemo optio?</p>
+                <a href="#" class="btn">Learn More</a>
+        </div>
+    </div>
+</section>
+<!--about sectiom ends here-->
+<section class="products" id="products">
+<h1 class="heading">Choose what <span>you like</span></h1>
+<div class="box-container">
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200<span>R170</span></div>
+        <a href="#" class="btn-cart">add to cart</a>
+    </div>
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200</div>
+        <a href="#" class="btn-cart">add to cart</a>
+    </div>
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200</div>
+        <a href="#" class="btn-cart">add to cart</a>
+    </div>
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200</div>
+        <a href="#" class="btn-cart">add to cart</a>
+    </div>
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200</div>
+        <a href="#" class="btn-cart">add to cart</a>
+    </div>
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200</div>
+        <a href="#" class="btn-cart"">add to cart</a>
+    </div>
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200</div>
+        <a href="#" class="btn-cart">add to cart</a>
+    </div>
+    <div class="box">
+        <img src="../images/product.jpg" alt="">
+        <h3>Stylish cap</h3>
+        <div class="price"> R200</div>
+        <a href="#" class="btn-cart">add to cart</a>
+    </div>
+</div>
+</section>
+<!-- custom js file link-->
+<script src="../js/script.js"></script>
 </body>
 </html>
 
- <!-- <form action=" https://sandbox.payfast.co.za​/eng/process" method="post"> -->
-      
+
+
