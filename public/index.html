@@ -1,39 +1,4 @@
-<!-- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PayFast Payment Gateway</title>
-</head>
-<body>
-  <form id="payfast-form" method="post" action="https://sandbox.payfast.co.za/process">
-    <input type="hidden" id="merchant_id" name="merchant_id" value="10033177">
-    <input type="hidden" id="merchant_key" name="merchant_key" value="p67vrkpp4x7ba">
-    <input type="hidden" id="return_url" name="return_url" value="http://localhost:3000/payment/success">
-    <input type="hidden" id="cancel_url" name="cancel_url" value="http://localhost:3000/payment/cancel">
-    <input type="hidden" id="notify_url" name="notify_url" value="http://localhost:3000/payment/notify">
-    <input type="hidden" id="name_first" name="name_first" value="Test">
-    <input type="hidden" id="name_last" name="name_last" value="User">
-    <input type="hidden" id="email_address" name="email_address" value="testuser@example.com">
-    <input type="hidden" id="m_payment_id" name="m_payment_id" value="123456">
-    <input type="hidden" id="amount" name="amount" value="1000">
-    <input type="hidden" id="currency" name="currency" value="ZAR">
-    <input type="hidden" id="item_name" name="item_name" value="Test Item">
-    <input type="submit" value="Pay Now">
-  </form>
-  <script>
-    const form = document.getElementById('payfast-form');
-    const generateSignature = require('./generateSignature');
-    const payload = generateSignature(1000, 'Test Item');
-    for (const key in payload) {
-      if (payload.hasOwnProperty(key)) {
-        form[key].value = payload[key];
-      }
-    }
-  </script>
-</body>
-</html> -->
+
 
 <!DOCTYPE html>
 <html lang="en">
