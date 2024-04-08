@@ -50,47 +50,57 @@ app.post("/hashData", (req, res) => {
 // });
 
 //this is the code for ozow intergration
-
-
-
 function generateRequestHash(siteCode, countryCode, currencyCode, amount, transactionReference, bankReference, cancelUrl, errorUrl, successUrl, notifyUrl, privateKey) {
-  console.log("side ", siteCode);
-  const inputString = `${siteCode}${countryCode}${currencyCode}${amount}${transactionReference}${bankReference}${cancelUrl}${errorUrl}${successUrl}${notifyUrl}${isTest}${privateKey}`;
-
+  const inputString = `${siteCode}${countryCode}${currencyCode}${amount}${transactionReference}${bankReference}${cancelUrl}${errorUrl}${successUrl}${notifyUrl}${privateKey}`;
   const calculatedHashResult = generateRequestHashCheck(inputString);
   console.log(`Hashcheck: ${calculatedHashResult}`);
+  return calculatedHashResult;
 }
-
 function generateRequestHashCheck(inputString) {
   const stringToHash = inputString.toLowerCase();
   console.log(`Before Hashcheck: ${stringToHash}`);
   return getSha512Hash(stringToHash);
 }
-
 function getSha512Hash(stringToHash) {
   const hash = crypto.createHash("sha512");
   hash.update(stringToHash);
-  return hash.digest("hex");
+  const hashDigest = hash.digest("hex");
+  console.log("hash.digest(hex) is ", hashDigest)
+  return hashDigest;
 }
 
-app.post("/RequestHash", (req, res) => {
-  console.log('this being done');
-  // Assuming req.body contains the data for which signature needs to be generated
-  const data = req.body;
-  console.log('data is ', data);
-  // Access private key
+app.post("/request-hash", (req, res) => {
+  const ozowData = req.body;
   const privateKey = process.env.PRIVATE_KEY;
-  const isTest = true;
+  const { siteCode, countryCode, currencyCode, amount, transactionReference, bankReference, cancelUrl, errorUrl, successUrl, notifyUrl } = ozowData;
+  const hash = generateRequestHash(siteCode, countryCode, currencyCode, amount, transactionReference, bankReference, cancelUrl, errorUrl, successUrl, notifyUrl, privateKey);
+ console.log("generateRequestHash is ",generateRequestHash)
+  res.json({ hash: hash });
+});
 
-  // Assuming passphrase is sent in the request body as well
-  // const passPhrase = req.body.passphrase;
-  console.log("my data", data);
-  const { siteCode, countryCode, currencyCode, amount, transactionReference, bankReference, cancelUrl, errorUrl, successUrl, notifyUrl } = data;
-  generateRequestHash(siteCode, countryCode, currencyCode, amount, transactionReference, bankReference, cancelUrl, errorUrl, successUrl, notifyUrl, privateKey);
 
-  //const signature = generateSignature(data, passPhrase);
-
-  res.json({ data: data, signature: signature });
+app.post("/checkout", async (req, res) => {
+  try {
+      const ozowData = req.body;
+      const options = {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'ApiKey': process.env.API_KEY,
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(ozowData)
+      };
+      const response = await fetch('https://stagingapi.ozow.com/PostPaymentRequest', options);
+      if (!response.ok) {
+          throw new Error("Failed to initiate checkout");
+      }
+      const paymentUrl = await response.text();
+      res.json({ paymentUrl: paymentUrl });
+  } catch (error) {
+      console.error("Error during checkout:", error.message);
+      res.status(500).json({ error: error.message });
+  }
 });
 
 

@@ -320,37 +320,55 @@ clearCartItems();
 updateCartTotal();
 
 
-// this is for Ozow
-const ozowData={
-   siteCode : "ATL-ATL-008",
-   countryCode : "ZA",
-   currencyCode :"ZAR",
-   amount : 25.01,
-   transactionReference : "123",
-   bankReference : "ABC123",
-   cancelUrl : "http://mydomain.com/cancel.html",
-   errorUrl : "http://mydomain.com/error.html",
-   successUrl : "http://mydomain.com/success.html",
-   notifyUrl : "http://mydomain/notify.html",
+const ozowData = {
+  siteCode : "ATL-ATL-008",
+  countryCode : "ZA",
+  currencyCode :"ZAR",
+  amount : 25.01,
+  transactionReference : "123",
+  bankReference : "ABC123",
+  cancelUrl : "http://mydomain.com/cancel.html",
+  errorUrl : "http://mydomain.com/error.html",
+  successUrl : "http://mydomain.com/success.html",
+  notifyUrl : "http://mydomain/notify.html",
 }
-const generateHashSignature = async () => {
+
+async function generateHashSignature() {
   try {
-     const response = await fetch("http://localhost:3000/RequestHash", {
-       method: "POST",
-       headers: {
-         "Content-Type": "application/json",        
-       },
-       body: JSON.stringify(ozowData),
-     });
-     if (!response.ok) {
-       throw new Error("Failed to generate signature");
-     }
-     const data = await response.json();
-     console.log(" ozow data.signature is ",data.signature)
-     ozowData["signature"] = data.signature;
-   
+      const response = await fetch("http://localhost:3000/request-hash", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(ozowData),
+      });
+      if (!response.ok) {
+          throw new Error("Failed to generate signature");
+      }
+      const data = await response.json();
+      ozowData["hash"] = data.hash;
+      return ozowData;
   } catch (error) {
-     console.error("Error generating signature:", error.message);
+      console.error("Error generating signature:", error.message);
   }
- };
- generateHashSignature()
+}
+
+async function checkout() {
+  try {
+      const ozowData = await generateHashSignature();
+      const response = await fetch("http://localhost:3000/checkout", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(ozowData),
+      });
+      if (!response.ok) {
+          throw new Error("Failed to start checkout process");
+      }
+      const { paymentUrl } = await response.json();
+      window.location.href = paymentUrl;
+  } catch (error) {
+      console.error("Error during checkout:", error.message);
+  }
+}
