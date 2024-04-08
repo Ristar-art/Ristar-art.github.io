@@ -354,4 +354,3 @@ const generateHashSignature = async () => {
   }
  };
  generateHashSignature()
-//  'Authorization': `Bearer ${"2d252f05ad694119becccb190574bbc9"}` // Assuming the API uses Bearer token
