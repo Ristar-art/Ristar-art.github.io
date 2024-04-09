@@ -324,13 +324,14 @@ const ozowData = {
   siteCode : "ATL-ATL-008",
   countryCode : "ZA",
   currencyCode :"ZAR",
-  amount : 25.01,
+  amount : 1.00,
   transactionReference : "123",
   bankReference : "ABC123",
   cancelUrl : "http://mydomain.com/cancel.html",
   errorUrl : "http://mydomain.com/error.html",
   successUrl : "http://mydomain.com/success.html",
   notifyUrl : "http://mydomain/notify.html",
+  isTest:true,
 }
 
 async function generateHashSignature() {
@@ -346,7 +347,7 @@ async function generateHashSignature() {
           throw new Error("Failed to generate signature");
       }
       const data = await response.json();
-      ozowData["hash"] = data.hash;
+      ozowData["hashCheck"] = data.hash;
       return ozowData;
   } catch (error) {
       console.error("Error generating signature:", error.message);
@@ -355,7 +356,9 @@ async function generateHashSignature() {
 
 async function checkout() {
   try {
+
       const ozowData = await generateHashSignature();
+      console.log('ozowData is ',ozowData)
       const response = await fetch("http://localhost:3000/checkout", {
           method: "POST",
           headers: {
@@ -367,6 +370,7 @@ async function checkout() {
           throw new Error("Failed to start checkout process");
       }
       const { paymentUrl } = await response.json();
+      console.log("paymentUrli is ",paymentUrl)
       window.location.href = paymentUrl;
   } catch (error) {
       console.error("Error during checkout:", error.message);

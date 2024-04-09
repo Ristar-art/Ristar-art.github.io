@@ -63,25 +63,29 @@ function generateRequestHashCheck(inputString) {
 }
 function getSha512Hash(stringToHash) {
   const hash = crypto.createHash("sha512");
-  hash.update(stringToHash);
-  const hashDigest = hash.digest("hex");
-  console.log("hash.digest(hex) is ", hashDigest)
-  return hashDigest;
+  hash.update(stringToHash); 
+  return hash.digest("hex");
 }
 
 app.post("/request-hash", (req, res) => {
   const ozowData = req.body;
   const privateKey = process.env.PRIVATE_KEY;
   const { siteCode, countryCode, currencyCode, amount, transactionReference, bankReference, cancelUrl, errorUrl, successUrl, notifyUrl } = ozowData;
-  const hash = generateRequestHash(siteCode, countryCode, currencyCode, amount, transactionReference, bankReference, cancelUrl, errorUrl, successUrl, notifyUrl, privateKey);
- console.log("generateRequestHash is ",generateRequestHash)
+  
+ 
+  const dataWithoutPrivateKey = { siteCode, countryCode, currencyCode, amount, transactionReference, bankReference, cancelUrl, errorUrl, successUrl, notifyUrl };
+  
+  const hash = generateRequestHash(dataWithoutPrivateKey, privateKey);
+
   res.json({ hash: hash });
 });
+
 
 
 app.post("/checkout", async (req, res) => {
   try {
       const ozowData = req.body;
+      console.log('ozowData is ',ozowData)
       const options = {
           method: 'POST',
           headers: {
@@ -91,11 +95,13 @@ app.post("/checkout", async (req, res) => {
           },
           body: JSON.stringify(ozowData)
       };
-      const response = await fetch('https://stagingapi.ozow.com/PostPaymentRequest', options);
+      console.log("options is ",options)
+      const response = await fetch('https://api.ozow.com/PostPaymentRequest', options);
       if (!response.ok) {
           throw new Error("Failed to initiate checkout");
       }
       const paymentUrl = await response.text();
+      console.log(" paymentUrl is ",paymentUrl)
       res.json({ paymentUrl: paymentUrl });
   } catch (error) {
       console.error("Error during checkout:", error.message);
