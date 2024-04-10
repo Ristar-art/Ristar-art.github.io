@@ -36,10 +36,10 @@ app.post("/hashData", (req, res) => {
   const data = req.body;
   
   // Assuming passphrase is sent in the request body as well
-  // const passPhrase = req.body.passphrase;
+   //const passPhrase = req.body.passphrase;
   
-  const signature = generateSignature(data);
-  //const signature = generateSignature(data, passPhrase);
+   const signature = generateSignature(data);
+   //const signature = generateSignature(data, passPhrase);
   
   res.json({ signature: signature });
 });

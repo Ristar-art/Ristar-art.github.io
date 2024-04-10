@@ -29,8 +29,8 @@ const myData = {
     m_payment_id: "01AB",
     amount: "100.00",
     item_name: "boby",
-    // passphrase: "f103e22c0418655fb03991538c51bfd5",
-    // Add other necessary data here
+    //passphrase: "f103e22c0418655fb03991538c51bfd5",
+    
    };
    
    // Function to generate the signature
