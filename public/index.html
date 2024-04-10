@@ -1,22 +1,76 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PayFast Payment Gateway</title>
+  <!--font awesome cdn link-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!--custom css file link -->
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <div class="form-container">
-    <form action="http://localhost:3000/pay" method="post">
-      <input type="text" name="amount" placeholder="Amount to Pay">
-      <input type="text" name="item_name" placeholder="Item Name">
-      <input type="submit" value="Pay Now">
-    </form>
-  </div>
-</body>
-</html>
+   <!--header section starts-->
+   <header class="header">
+    <a href="#" class="logo">
+        <img src="../images/logo.png" alt="">
+    </a>
+    <nav class="navbar">
+        <a href="#home">home</a>
+        <a href="#about">about</a>
+        <a href="#products">products</a>
+        <a href="#review">review</a>
+        <a href="#contact">contact</a>
+    </nav>
+    <div class="icons">
+        <div class="fas fa-search" id="search-btn"></div>
+        <div class="fa fa-shopping-cart" id="cart-btn"></div>
+        <div class="fa fa-bars" id="menu-btn"></div>
+    </div>
+    <div class="search-form">
+        <input type="search" id="search" placeholder="search...">
+        <label for="search-box" class="fas fa-search"></label>
+    </div>
+    <div class="cart-items-container">
+        <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="../images/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 01</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div>
+        <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="i../mages/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 02</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div>
+        <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="../images/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 03</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div>
+        <!-- <div class="cart-item">
+            <span class="fas fa-times"></span>
+            <img src="../images/cart-item-1.jpg" alt="">
+            <div class="content">
+                <h3>cart item 04</h3>
+                <div class="price">R150/-</div>
+            </div>
+        </div> -->
+        <div id="cart-total"></div>
+ <!-- Add this line -->
+        <div>
+         
+          <div id="paymentFormContainer">
+            <a href="#" class="btn-checkout">Checkout</a>
+          </div>
+          <button id="checkoutButton" onclick="checkout()">Checkout</button>
 
- <!-- <form action=" https://sandbox.payfast.co.za​/eng/process" method="post"> -->
-      
+
